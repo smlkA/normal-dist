@@ -58,7 +58,7 @@ const Plot = ({ points, STD }) => {
 
       path.datum(points).transition().attr("d", prepareLineData(x, y));
     }
-  }, [points]);
+  }, [points, STD]);
 
   return <svg ref={ref} />;
 };

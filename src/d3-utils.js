@@ -1,5 +1,6 @@
 import * as d3 from "d3";
 
+const xMarginCoeff = 2;
 export const prepareLineData = (xScale, yScale) => {
   return d3
     .line()
@@ -13,7 +14,10 @@ export const prepareLineData = (xScale, yScale) => {
 
 export const calculateInitScale = (points, STD, scales) => {
   const { xScale, yScale } = scales;
-  xScale.domain([points[0].x - 2 * STD, points[points.length - 1].x + 2 * STD]);
+  xScale.domain([
+    points[0].x - xMarginCoeff * STD,
+    points[points.length - 1].x + xMarginCoeff * STD,
+  ]);
   yScale.domain(d3.extent(points, (d) => d.y));
   return { x: xScale, y: yScale };
 };
@@ -29,8 +33,8 @@ export const recalculateScale = (points, STD, scales, plotSize) => {
     Math.abs(yScale(yMax)) > height
   ) {
     xScale.domain([
-      points[0].x - 2 * STD,
-      points[points.length - 1].x + 2 * STD,
+      points[0].x - xMarginCoeff * STD,
+      points[points.length - 1].x + xMarginCoeff * STD,
     ]);
     yScale.domain(
       d3.extent(points, function (d) {
@@ -39,8 +43,8 @@ export const recalculateScale = (points, STD, scales, plotSize) => {
     );
   } else if (xScale(xMax) > width || xScale(xMin) < 0) {
     xScale.domain([
-      points[0].x - 2 * STD,
-      points[points.length - 1].x + 2 * STD,
+      points[0].x - xMarginCoeff * STD,
+      points[points.length - 1].x + xMarginCoeff * STD,
     ]);
   }
   return { x: xScale, y: yScale };

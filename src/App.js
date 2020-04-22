@@ -4,8 +4,8 @@ import { useDebouncedCallback } from "use-debounce";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Box from "@material-ui/core/Box";
-import TextField from "@material-ui/core/TextField";
 import Header from "./Header";
+import MeanStdInput from "./MeanStdInput";
 import Plot from "./Plot";
 import { ACTIONS, switchTab, setInputValue } from "./actions";
 import { generateNormalDist } from "./utils";
@@ -69,22 +69,7 @@ function App() {
         <Tab label="Min/Max" />
       </Tabs>
       <TabPanel value={state.activeTab} index={0}>
-        <TextField
-          type="number"
-          id={ACTIONS.SET_MEAN}
-          label="Mean"
-          variant="outlined"
-          defaultValue={state.mean}
-          onChange={(e) => debouncedCallback(e.target.id, e.target.value)}
-        />
-        <TextField
-          type="number"
-          id={ACTIONS.SET_STD}
-          label="STD"
-          variant="outlined"
-          defaultValue={state.STD}
-          onChange={(e) => debouncedCallback(e.target.id, e.target.value)}
-        />
+        <MeanStdInput values={state} onChange={debouncedCallback} />
       </TabPanel>
       <TabPanel value={state.activeTab} index={1}>
         Feature is in develop
